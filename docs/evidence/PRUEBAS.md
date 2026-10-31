@@ -9,11 +9,14 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Gateway `/health` | Local TestClient | **OK**: 200 | `pytest tests/test_gateway.py` | 30-10-2026 |
 | Acceso sin Bearer a perfil | Local TestClient | **OK**: 401 | `test_requires_bearer` | 30-10-2026 |
 | Acceso sin Bearer a crear publicación | Local TestClient | **OK**: 401 | `test_requires_bearer` | 30-10-2026 |
+| Docker `hello-world` | Windows del estudiante | **OK**: imagen descargada y contenedor ejecutado | Salida `Hello from Docker!` reportada por el estudiante | 31-10-2026 |
 | Docker Compose completo | Windows del estudiante | PENDIENTE | — | — |
 | JWT real desde Supabase Auth | Integración real | PENDIENTE | — | — |
 | Perfil persistido en Supabase | Integración real | PENDIENTE | — | — |
 | Publicación persistida en Supabase | Integración real | PENDIENTE | — | — |
-| Aislamiento de schema/rol | Supabase | PENDIENTE | — | — |
+| Creación de roles, schemas y tablas de PoC | Supabase SQL Editor | **OK**: script corregido ejecutado sin error | Captura `Success. No rows returned` | 31-10-2026 |
+| Privilegios `SELECT` por schema/rol | Supabase SQL Editor | **OK**: `true, false, true, false` | Captura de consulta con `has_table_privilege` | 31-10-2026 |
+| Acceso real con login `poc_auth` y `poc_listado` | PostgreSQL/Supavisor | PENDIENTE (las consultas administrativas no sustituyen esta prueba) | — | — |
 | Gateway → Listado → Auth/Users | Render | PENDIENTE | — | — |
 | `/docs` y `/health` remoto | Render | PENDIENTE | — | — |
 | Cold start / latencia | Render | PENDIENTE | — | — |
@@ -34,4 +37,4 @@ Registrar ensayo, momento de inactividad, HTTP status, total en segundos, regió
 
 | Fecha | Servicio | Problema observado | Causa probable | Cambio | Resultado verificado |
 |---|---|---|---|---|---|
-| — | — | — | — | — | — |
+| 31-10-2026 | Supabase PostgreSQL | `ERROR 42501: must be able to SET ROLE "poc_auth"` | El SQL Editor no pudo asumir el rol creado | Script `002_supabase_setup.sql` adaptado: crear objetos sin `SET ROLE`, conceder privilegios explícitos | **OK**: creación y comprobación administrativa de permisos; queda pendiente conexión real con ambos logins | — |
