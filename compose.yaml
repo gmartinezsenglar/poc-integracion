@@ -1,0 +1,58 @@
+name: roomies-poc
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: solo_local_admin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/database/001_local_init.sql:/docker-entrypoint-initdb.d/001_local_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "127.0.0.1:5433:5432"
+
+  auth-users-service:
+    build: ./backend/services/auth-users-service
+    environment:
+      DATABASE_URL: postgresql+psycopg://poc_auth:solo_local_auth@postgres:5432/postgres
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8001:8000"
+
+  listado-applications-service:
+    build: ./backend/services/listado-applications-service
+    environment:
+      DATABASE_URL: postgresql+psycopg://poc_listado:solo_local_listado@postgres:5432/postgres
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      AUTH_USERS_URL: http://auth-users-service:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8002:8000"
+
+  api-gateway:
+    build: ./backend/api-gateway
+    environment:
+      AUTH_USERS_URL: http://auth-users-service:8000
+      LISTADO_URL: http://listado-applications-service:8000
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    depends_on:
+      - auth-users-service
+      - listado-applications-service
+    ports:
+      - "127.0.0.1:8000:8000"
+
+volumes:
+  pgdata:
