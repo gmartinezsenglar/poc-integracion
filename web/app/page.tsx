@@ -168,7 +168,7 @@ export default function Home() {
               <label>Correo electrónico<input required value={email} type="email" onChange={e => setEmail(e.target.value)} placeholder="correo@ejemplo.cl" /></label>
               <label>Contraseña<input required value={password} type="password" minLength={6} onChange={e => setPassword(e.target.value)} placeholder="••••••••" /></label>
               <div className="btn-row"><button disabled={busy} type="submit">Ingresar</button><button disabled={busy} type="button" className="secondary" onClick={onRegister}>Registrarse</button></div>
-              <div className="otp"><label>¿Recibiste un código de verificación?<input value={otp} onChange={e => setOtp(e.target.value)} inputMode="numeric" placeholder="6 dígitos" /></label><button disabled={busy || !otp} type="button" className="secondary" onClick={onVerifyOtp}>Verificar correo</button></div>
+              <div className="otp"><label>¿Recibiste un código de verificación?<input value={otp} onChange={e => setOtp(e.target.value)} inputMode="numeric" placeholder="Código recibido por correo" /></label><button disabled={busy || !otp} type="button" className="secondary" onClick={onVerifyOtp}>Verificar correo</button></div>
             </form>
           )}
         </section>
