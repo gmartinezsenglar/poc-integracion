@@ -11,7 +11,9 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Acceso sin Bearer a crear publicación | Local TestClient | **OK**: 401 | `test_requires_bearer` | 30-10-2026 |
 | Docker `hello-world` | Windows del estudiante | **OK**: imagen descargada y contenedor ejecutado | Salida `Hello from Docker!` reportada por el estudiante | 31-10-2026 |
 | Docker Compose completo | Windows del estudiante | PENDIENTE | — | — |
-| JWT real desde Supabase Auth | Integración real | PENDIENTE | — | — |
+| Inicio de sesión real de Supabase Auth desde Vercel | Web → Supabase Auth | **OK observado**: interfaz muestra sesión, UUID y correo confirmado tras corregir variables de entorno de Vercel; verificación del JWT en FastAPI pendiente | Captura del estudiante | 01-11-2026 |
+| JWT verificado por FastAPI | Gateway → Auth/Users | PENDIENTE: consulta autenticada de perfil arroja HTTP 500 y debe diagnosticarse en logs | — | — |
+| Lectura de perfil `GET /usuarios/me` | Vercel → Gateway → Auth/Users | **FALLA observada**: HTTP 500 con sesión iniciada; esperábamos 404 si aún no existía perfil | Captura del estudiante; inspeccionar logs de Auth/Users antes de ejecutar PUT | 01-11-2026 |
 | Perfil persistido en Supabase | Integración real | PENDIENTE | — | — |
 | Publicación persistida en Supabase | Integración real | PENDIENTE | — | — |
 | Creación de roles, schemas y tablas de PoC | Supabase SQL Editor | **OK**: script corregido ejecutado sin error | Captura `Success. No rows returned` | 31-10-2026 |
