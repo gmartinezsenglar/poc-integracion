@@ -18,7 +18,9 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Privilegios `SELECT` por schema/rol | Supabase SQL Editor | **OK**: `true, false, true, false` | Captura de consulta con `has_table_privilege` | 31-10-2026 |
 | Acceso real como `poc_auth` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_auth`; lectura propia permitida; lectura del schema Listado denegada | Captura de `psql` interactivo por Docker con TLS 1.3 | 01-11-2026 |
 | Acceso real como `poc_listado` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_listado`; lectura de Listado permitida; acceso a `auth_users` denegado | Captura `psql` por Docker postgres:17-alpine con TLS 1.3 | 01-11-2026 |
-| Gateway → Listado → Auth/Users | Render | PENDIENTE | — | — |
+| Listado `/docs`, `/health`, `/publicaciones` | Render · listado-applications-service | **OK observado**: docs accesibles; health ok; listado devuelve `[]` (SELECT remoto sin publicaciones) | Capturas de URLs compartidas por el estudiante | 01-11-2026 |
+| Gateway `/ready` | Render | **PARCIAL**: `degraded`, `auth-users=false`, `listado=true`; requiere repetir tras reactivar Auth/Users e inspeccionar logs si persiste | Captura de `/ready` proporcionada por el estudiante | 01-11-2026 |
+| Gateway → Listado → Auth/Users | Render | PENDIENTE de prueba E2E autenticada; `/ready` parcial no valida flujo de negocio | — | — |
 | `/docs` y `/health` remoto | Render · auth-users-service | **OK observado por el usuario**: `/health` devolvió `status: ok` y `/docs` mostró Swagger/OpenAPI; no acredita acceso SQL | Captura y URLs compartidas en chat: `https://roomies-poc-auth-users.onrender.com/health`, `/docs` | 01-11-2026 |
 | Cold start / latencia | Render | PENDIENTE | — | — |
 | Next.js desplegado y accesible en Vercel | Vercel | **Reportado por el estudiante**: URL pública `https://roomies-poc-web.vercel.app/`; Gateway no integrado todavía | URL compartida en la conversación; pendiente comprobación E2E | 01-11-2026 |
