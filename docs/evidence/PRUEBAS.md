@@ -19,7 +19,7 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Acceso real como `poc_auth` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_auth`; lectura propia permitida; lectura del schema Listado denegada | Captura de `psql` interactivo por Docker con TLS 1.3 | 01-11-2026 |
 | Acceso real como `poc_listado` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_listado`; lectura de Listado permitida; acceso a `auth_users` denegado | Captura `psql` por Docker postgres:17-alpine con TLS 1.3 | 01-11-2026 |
 | Gateway → Listado → Auth/Users | Render | PENDIENTE | — | — |
-| `/docs` y `/health` remoto | Render | PENDIENTE | — | — |
+| `/docs` y `/health` remoto | Render · auth-users-service | **OK observado por el usuario**: `/health` devolvió `status: ok` y `/docs` mostró Swagger/OpenAPI; no acredita acceso SQL | Captura y URLs compartidas en chat: `https://roomies-poc-auth-users.onrender.com/health`, `/docs` | 01-11-2026 |
 | Cold start / latencia | Render | PENDIENTE | — | — |
 | UI de Vercel usando API real | Vercel | PENDIENTE | — | — |
 | Reimplementar/redesplegar y consultar datos previos | Render + Supabase | PENDIENTE | — | — |
