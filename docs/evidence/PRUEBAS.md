@@ -16,7 +16,8 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Publicación persistida en Supabase | Integración real | PENDIENTE | — | — |
 | Creación de roles, schemas y tablas de PoC | Supabase SQL Editor | **OK**: script corregido ejecutado sin error | Captura `Success. No rows returned` | 31-10-2026 |
 | Privilegios `SELECT` por schema/rol | Supabase SQL Editor | **OK**: `true, false, true, false` | Captura de consulta con `has_table_privilege` | 31-10-2026 |
-| Acceso real con login `poc_auth` y `poc_listado` | PostgreSQL/Supavisor | PENDIENTE (las consultas administrativas no sustituyen esta prueba) | — | — |
+| Acceso real como `poc_auth` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_auth`; lectura propia permitida; lectura del schema Listado denegada | Captura de `psql` interactivo por Docker con TLS 1.3 | 01-11-2026 |
+| Acceso real como `poc_listado` | PostgreSQL de Supabase mediante Session Pooler | PENDIENTE (repetir prueba inversa con rol distinto) | — | — |
 | Gateway → Listado → Auth/Users | Render | PENDIENTE | — | — |
 | `/docs` y `/health` remoto | Render | PENDIENTE | — | — |
 | Cold start / latencia | Render | PENDIENTE | — | — |
@@ -37,4 +38,4 @@ Registrar ensayo, momento de inactividad, HTTP status, total en segundos, regió
 
 | Fecha | Servicio | Problema observado | Causa probable | Cambio | Resultado verificado |
 |---|---|---|---|---|---|
-| 31-10-2026 | Supabase PostgreSQL | `ERROR 42501: must be able to SET ROLE "poc_auth"` | El SQL Editor no pudo asumir el rol creado | Script `002_supabase_setup.sql` adaptado: crear objetos sin `SET ROLE`, conceder privilegios explícitos | **OK**: creación y comprobación administrativa de permisos; queda pendiente conexión real con ambos logins | — |
+| 31-10-2026 | Supabase PostgreSQL | `ERROR 42501: must be able to SET ROLE "poc_auth"` | El SQL Editor no pudo asumir el rol creado | Script `002_supabase_setup.sql` adaptado: crear objetos sin `SET ROLE`, conceder privilegios explícitos | **OK**: creación y comprobación administrativa de permisos; conexión real comprobada después para `poc_auth`; `poc_listado` pendiente |
