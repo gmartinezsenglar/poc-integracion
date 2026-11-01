@@ -12,8 +12,8 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Docker `hello-world` | Windows del estudiante | **OK**: imagen descargada y contenedor ejecutado | Salida `Hello from Docker!` reportada por el estudiante | 31-10-2026 |
 | Docker Compose completo | Windows del estudiante | PENDIENTE | — | — |
 | Inicio de sesión real de Supabase Auth desde Vercel | Web → Supabase Auth | **OK observado**: interfaz muestra sesión, UUID y correo confirmado tras corregir variables de entorno de Vercel; verificación del JWT en FastAPI pendiente | Captura del estudiante | 01-11-2026 |
-| JWT verificado por FastAPI | Gateway → Auth/Users | PENDIENTE: consulta autenticada de perfil arroja HTTP 500 y debe diagnosticarse en logs | — | — |
-| Lectura de perfil `GET /usuarios/me` | Vercel → Gateway → Auth/Users | **FALLA observada**: HTTP 500 con sesión iniciada; esperábamos 404 si aún no existía perfil | Captura del estudiante; inspeccionar logs de Auth/Users antes de ejecutar PUT | 01-11-2026 |
+| JWT verificado por FastAPI | Gateway → Auth/Users | **OK inferido de ejecución**: traza de `GET /usuarios/me` autenticado llegó a `ProfileService.get` y `ProfileRepository.get`, después de la dependencia `get_identity` | Logs Render del estudiante (01-11-2026); no confirma persistencia | 01-11-2026 |
+| Lectura de perfil `GET /usuarios/me` | Vercel → Gateway → Auth/Users | **FALLA identificada**: HTTP 500 por `psycopg.OperationalError: failed to resolve host 'POOLER_HOST'`; requiere corregir `DATABASE_URL` en Render; nuevo resultado pendiente | Traza Render enviada en dos archivos (01-11-2026) | 01-11-2026 |
 | Perfil persistido en Supabase | Integración real | PENDIENTE | — | — |
 | Publicación persistida en Supabase | Integración real | PENDIENTE | — | — |
 | Creación de roles, schemas y tablas de PoC | Supabase SQL Editor | **OK**: script corregido ejecutado sin error | Captura `Success. No rows returned` | 31-10-2026 |
@@ -44,3 +44,4 @@ Registrar ensayo, momento de inactividad, HTTP status, total en segundos, regió
 | Fecha | Servicio | Problema observado | Causa probable | Cambio | Resultado verificado |
 |---|---|---|---|---|---|
 | 31-10-2026 | Supabase PostgreSQL | `ERROR 42501: must be able to SET ROLE "poc_auth"` | El SQL Editor no pudo asumir el rol creado | Script `002_supabase_setup.sql` adaptado: crear objetos sin `SET ROLE`, conceder privilegios explícitos | **OK**: creación y comprobación administrativa de permisos; conexión real comprobada después para `poc_auth`; `poc_listado` pendiente |
+| 01-11-2026 | Render Auth/Users | `GET /usuarios/me` devolvió HTTP 500 al intentar abrir conexión PostgreSQL | `DATABASE_URL` contiene el host literal `POOLER_HOST`, no el host de Session Pooler de Supabase | Pendiente: corregir únicamente variable `DATABASE_URL` en Render; redeploy | PENDIENTE de nueva lectura: se espera 404 si el perfil no existe |\n
