@@ -21,7 +21,8 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Gateway → Listado → Auth/Users | Render | PENDIENTE | — | — |
 | `/docs` y `/health` remoto | Render · auth-users-service | **OK observado por el usuario**: `/health` devolvió `status: ok` y `/docs` mostró Swagger/OpenAPI; no acredita acceso SQL | Captura y URLs compartidas en chat: `https://roomies-poc-auth-users.onrender.com/health`, `/docs` | 01-11-2026 |
 | Cold start / latencia | Render | PENDIENTE | — | — |
-| UI de Vercel usando API real | Vercel | PENDIENTE | — | — |
+| Next.js desplegado y accesible en Vercel | Vercel | **Reportado por el estudiante**: URL pública `https://roomies-poc-web.vercel.app/`; Gateway no integrado todavía | URL compartida en la conversación; pendiente comprobación E2E | 01-11-2026 |
+| UI de Vercel usando Gateway y APIs reales | Vercel + Render | PENDIENTE | — | — |
 | Reimplementar/redesplegar y consultar datos previos | Render + Supabase | PENDIENTE | — | — |
 
 ## Tiempos medidos
