@@ -17,7 +17,7 @@ No completar una casilla como «aprobada» si no se ejecutó la prueba en el ent
 | Creación de roles, schemas y tablas de PoC | Supabase SQL Editor | **OK**: script corregido ejecutado sin error | Captura `Success. No rows returned` | 31-10-2026 |
 | Privilegios `SELECT` por schema/rol | Supabase SQL Editor | **OK**: `true, false, true, false` | Captura de consulta con `has_table_privilege` | 31-10-2026 |
 | Acceso real como `poc_auth` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_auth`; lectura propia permitida; lectura del schema Listado denegada | Captura de `psql` interactivo por Docker con TLS 1.3 | 01-11-2026 |
-| Acceso real como `poc_listado` | PostgreSQL de Supabase mediante Session Pooler | PENDIENTE (repetir prueba inversa con rol distinto) | — | — |
+| Acceso real como `poc_listado` | PostgreSQL de Supabase mediante Session Pooler | **OK**: `current_user = poc_listado`; lectura de Listado permitida; acceso a `auth_users` denegado | Captura `psql` por Docker postgres:17-alpine con TLS 1.3 | 01-11-2026 |
 | Gateway → Listado → Auth/Users | Render | PENDIENTE | — | — |
 | `/docs` y `/health` remoto | Render | PENDIENTE | — | — |
 | Cold start / latencia | Render | PENDIENTE | — | — |
